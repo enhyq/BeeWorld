@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Images/Tiles/flag_01.png" type="Texture" id=1]
+[ext_resource path="res://Images/Tiles/arrow_right.png" type="Texture" id=2]
+[ext_resource path="res://Images/Tiles/flag_02.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "default",
+"speed": 1.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "flag_wave",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "arrow_right",
+"speed": 5.0
+} ]
+
+[node name="BackgroundObjects" type="Node2D"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 3 )
+playing = true

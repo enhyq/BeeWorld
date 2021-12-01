@@ -1,0 +1,132 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Images/Bee/bee.png" type="Texture" id=1]
+[ext_resource path="res://Scipts/Bug_KinematicBody2D.gd" type="Script" id=2]
+[ext_resource path="res://Images/Bee/bee_fly.png" type="Texture" id=3]
+[ext_resource path="res://Images/Bee/bee_dead_gray.png" type="Texture" id=4]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "bee_fly",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "bee_dead",
+"speed": 5.0
+} ]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="Bug_RigidBody2D" type="RigidBody2D"]
+mass = 3.0
+contacts_reported = 3
+script = ExtResource( 2 )
+debug = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+playing = true
+flip_h = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 17.5784, -10.4241, 9.63239, -11.8146, 2.08372, -11.1525, -6.43647, -8.30378, -13.9449, -3.38156, -17.6158, 2.95893, -18.5259, 12.6471, -17.4346, 20.1873, -12.3712, 23.9184, -5.7275, 23.7589, -0.469234, 21.0802, 1.31659, 15.1274, 3.00321, 11.3574, 9.47292, 15.0112, 16.552, 14.5392, 19.9102, 16.0237, 24.1624, 13.5826, 22.9449, 9.47231, 25.4252, 3.8172, 24.9292, -1.93713, 22.5481, -6.00485 )
+
+[node name="LinearVelocity" type="Line2D" parent="."]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width_curve = SubResource( 2 )
+
+[node name="ForwardMoveTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="DebugViewport" type="CanvasLayer" parent="."]
+
+[node name="ForwardVector" type="Line2D" parent="DebugViewport"]
+position = Vector2( 514, 310 )
+points = PoolVector2Array( 0, 0, 10, 10 )
+
+[node name="JumpVector" type="Line2D" parent="DebugViewport"]
+position = Vector2( 514, 310 )
+points = PoolVector2Array( 0, 0, -10, 10 )
+default_color = Color( 0.12549, 1, 0, 1 )
+
+[node name="Debug" type="Control" parent="DebugViewport"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DebugLabel" type="Label" parent="DebugViewport/Debug"]
+margin_left = 238.11
+margin_top = 84.926
+margin_right = 317.11
+margin_bottom = 98.926
+text = "Debug Label"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AddingLabel" type="Label" parent="DebugViewport/Debug"]
+margin_left = 242.079
+margin_top = 139.691
+margin_right = 320.079
+margin_bottom = 153.691
+text = "AddingLabel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PhysicalState" type="Control" parent="DebugViewport/Debug"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -192.0
+margin_top = -102.0
+margin_right = 192.0
+margin_bottom = 102.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AngularVelocity" type="Label" parent="DebugViewport/Debug/PhysicalState"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -171.473
+margin_top = -3.48474
+margin_right = -72.4729
+margin_bottom = 10.5153
+text = "AngularVelocity"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LinearVelocity" type="Label" parent="DebugViewport/Debug/PhysicalState"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -44.7491
+margin_top = -62.7119
+margin_right = 45.2509
+margin_bottom = -48.7119
+text = "LinearVelocity"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="body_entered" from="." to="." method="_on_Bug_RigidBody2D_body_entered"]
